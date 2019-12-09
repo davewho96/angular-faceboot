@@ -1,0 +1,159 @@
+<!-- <div class="row">
+        <div id="timeline" class="general-container col-lg-8 ">
+            <div class="section-header timeline-header">
+                <div class="timeline-header-text">
+                    <h1>{{title}}</h1>
+                </div>
+            </div> -->
+
+            
+            
+                <div id="timeline" class="general-container col-lg-12 ">
+                    <div class="section-header timeline-header">
+                        
+                        <!-- <div class="derecha timeline-header-button">
+                            <button class="btn btn-success" (click)="refreshComments($event)">
+                                <span class="fas fa-sync-alt"></span>
+                                Actualizar
+                            </button>
+                        </div> -->
+                    </div>
+                    
+                    <div class="loading" *ngIf="loading">
+                        <img class="img-loading" src="../../assets/images/load2.gif" alt="Loading image" />
+                    </div>
+            
+                    <div *ngIf="comments && !loading; then hay; else nohay"></div>
+            
+
+                    
+
+                    <ng-template #hay>
+                        <div *ngFor="let comment of comments">
+                            <div class="comment-card col-lg-12" [ngClass]='{"comment-my" : comment.user._id == identity._id}' >
+
+                                    <!-- <div class="general-container" *ngIf=" comment.user._id == identity._id"> -->
+                                
+                                    <div class="row">
+                                        <div class="col-lg-11">
+                                            <div class="comment-avatar">
+                                                <img src="{{ url + 'get-image-user/' + comment.user.image }}" *ngIf="comment.user.image" alt="Card image" />
+                                                <img src="assets/images/usuario.png" *ngIf="!comment.user.image" alt="Card image" />
+                                            </div>
+                                            <div class="comment-user">
+                                                <a [routerLink]="['/perfil', comment.user._id]">
+                                                    <h6>{{comment.user.name + ' ' +comment.user.surname}}</h6>
+                                                </a>
+
+                                                
+                                                    <div class="row" *ngIf=" comment.file && showImage != comment._id">
+                                                        <div class="card-body col-lg-8">
+                                                            <p class="comment-text">{{comment.text}}</p>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="card-body" *ngIf=" !comment.file || showImage == comment._id">
+                                                        <p class="comment-text">{{comment.text}}</p>
+                                                        <img class="card-img-normal" src="{{ url + 'get-image-pub/' + comment.file }}" alt="Card image" *ngIf="showImage == comment._id" (click)="hideThisImage(comment._id)"/>
+                                                        <small>{{ (comment.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</small>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+
+            
+                                        <div class="col-lg-1 derecha" *ngIf=" comment.user._id == identity._id">
+                                            <a class="btn btn-danger button-trash" data-toggle="modal" href="#deletePub{{comment._id}}" role="button">
+                                                <span class="fas fa-trash-alt span-trash"></span>							
+                                            </a>
+            
+                                            <!-- Modal HTML -->
+                                            <div id="deletePub{{comment._id}}" class="modal fade">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">¿Seguro que quieres eliminar el comentario?</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="crop text-muted"><em>"{{comment.text}}"</em></p>
+                                                            <p>Si lo borras no podrás recuperarlo.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteComment(comment._id)">Borrar el comentario</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+            
+                                        </div>
+                                    </div>
+                                
+                                
+                                
+            
+                                
+                                
+                                        
+                                    <!-- <div class="general-container">
+                                            <app-comment (commentSended)="refreshComments()"></app-comment>
+                                        </div> -->
+                                    
+                                
+            
+                            <!-- </div> -->
+                            </div>
+                        </div>
+                        <p class="center">
+                            <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+                                Ver más comentarios
+                            </button>
+                        </p>
+                    </ng-template>
+            
+                    <ng-template #nohay>
+                        
+                    </ng-template>
+                </div>
+            
+            
+            
+            
+            
+            
+            
+                
+                
+                
+                
+
+            
+
+<div class="card-body">
+						
+        <!-- Resultado del envío del FORMULARIO -->
+        <div class="alert alert-dismissible alert-danger" *ngIf="status == 'error'">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            Fallo en la publicación
+        </div>
+        <!-- FIN Resultado del envío del FORMULARIO -->
+
+        <form #newPubForm="ngForm" (ngSubmit)=' onSubmit(newPubForm, $event); '>
+            <p>
+                <textarea name="text" #text="ngModel" [(ngModel)]="comment.text" class="form-control" placeholder="Escribe un comentario..."></textarea>
+                
+            </p>
+
+            <!-- <p>
+                <label>Sube una imagen</label>
+                <input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)"/>
+            </p> -->
+
+            <div class="derecha">
+                <input type="submit" value="Comentar" class="btn btn-success" [disabled]="!newPubForm.form.valid" />
+            </div>
+        </form>
+</div>

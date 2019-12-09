@@ -1,0 +1,134 @@
+<div class="general-container">
+	<div class="jumbotron">
+		<h1 class="display-4">{{title}}, {{identity.name}}</h1>
+		<p class="lead">Hora de stalkear unos cuantos perfiles</p>
+		<hr class="my-4">
+		<p *ngIf="identity"><strong>¿Qué vas a publicar hoy?</strong></p>
+
+		<!-- Si estamos logueados -->
+		<div class="row" *ngIf="identity && identity!=null">
+			<div class="col-lg-4">
+				<a [routerLink]="['/perfil', identity._id]">
+					<div class="card text-white bg-warning mb-3">						
+						<div class="card-header">
+							<h4>
+								<span class="fas fa-list-ul"></span> Mi perfil
+							</h4>
+						</div>
+						<div class="card-body">
+							<p class="card-text">Consulta tus estadísticas (número de publicaciones, usuarios a los que sigues y que te siguen)</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-4">
+				<a [routerLink]="['/timeline']">
+					<div class="card text-white bg-info mb-3">
+						<div class="card-header">
+							<h4>
+								<span class="fas fa-list-ul"></span> Muro
+							</h4>
+						</div>
+						<div class="card-body">
+							<p class="card-text">Aquí verás tus publicaciones y de tus amigos</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-4">
+				<a [routerLink]="['/gente']">
+					<div class="card text-white bg-success mb-3">
+						<div class="card-header">
+							<h4>
+								<span class="fas fa-users"></span> Usuarios
+							</h4>
+						</div>
+						<div class="card-body">
+							<p class="card-text">Conoce a todos los usuarios de Faceboot</p>
+						</div>
+					</div>
+				</a>
+			</div>
+
+
+			<div class="card-body">
+						
+					<!-- Resultado del envío del FORMULARIO -->
+					<div class="alert alert-dismissible alert-danger" *ngIf="status == 'error'">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						Fallo en la publicación
+					</div>
+					<!-- FIN Resultado del envío del FORMULARIO -->
+			
+					<form #newPubForm="ngForm" (ngSubmit)=' onSubmit(newPubForm, $event); '>
+						<p> <strong>
+								Crear publicación
+						</strong>
+							
+						</p>
+						<p>
+							<textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" placeholder="¿Qué estás pensando?"></textarea>
+							
+						</p>
+			
+						<!-- <p>
+							<label>Sube una imagen</label>
+							<input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)"/>
+						</p> -->
+			
+						<div class="derecha">
+							<input type="submit" value="Publicar" class="btn btn-success" [disabled]="!newPubForm.form.valid" />
+						</div>
+					</form>
+				</div>
+
+
+			<!-- <div class="col-lg-3">
+				<a [routerLink]="['/mensajes']">
+					<div class="card text-white bg-info mb-3">
+						<div class="card-header">
+							<h4>
+								<span class="fas fa-envelope"></span> Mensajes
+							</h4>
+						</div>
+						<div class="card-body">
+							<p class="card-text">Por supuesto, que no falte un módulo de mensajería privada</p>
+						</div>
+					</div>
+				</a>
+			</div> -->
+		</div>
+
+		<!-- Si no estamos logueados -->
+		<div class="row justify-content-center" *ngIf="!identity || identity==null">
+			<div class="col-lg-3">
+				<a [routerLink]="['/register']">
+					<div class="card text-white bg-warning mb-3">
+						<div class="card-header">
+							<h4>
+								<span class="fas fa-user-plus"></span> Regístrarse
+							</h4>
+						</div>
+						<div class="card-body">
+							<p class="card-text">Rellena tus datos para formar parte de Faceboot</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3">
+				<a [routerLink]="['/login']">
+					<div class="card text-white bg-success mb-3">						
+						<div class="card-header">
+							<h4>
+								<span class="fas fa-sign-in-alt"></span> Iniciar sesión
+							</h4>
+						</div>
+						<div class="card-body">
+							<p class="card-text">Entra con tu email y contraseña</p>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

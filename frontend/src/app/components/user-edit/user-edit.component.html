@@ -1,0 +1,101 @@
+<div class="general-container col-lg-12">
+	<div class="section-header">
+		<h1>{{title}}</h1>
+	</div>
+
+	<!-- Sección de Alertas -->
+	<div class="alert alert-dismissible alert-success" *ngIf="status == 'success'">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		Datos actualizados correctamente
+	</div>
+	<div class="alert alert-dismissible alert-danger" *ngIf="status == 'error'">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		No se ha podido actualizar tus datos
+	</div>
+	<!-- FIN Sección de Alertas -->
+
+	<form #userEditForm="ngForm" (ngSubmit)='onSubmit()' class="col-lg-12">
+		<div class="row">
+			<div class="form-left col-lg-6">
+				<p>
+					<label for="">Nombre:</label>
+					<input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required />
+					<span *ngIf="!name.valid && name.touched" class="text-danger">
+						Ingresa nombre
+					</span>
+				</p>
+				<p>
+					<label>Apellidos:</label>
+					<input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required />
+					<span *ngIf="!surname.valid && surname.touched" class="text-danger">
+						ingresa apellidos
+					</span>
+				</p>
+
+				<p>
+					<label>Nick:</label>
+					<input type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" class="form-control" required />
+					<span *ngIf="!nick.valid && nick.touched" class="text-danger">
+						Ingresa nombre de usuario
+					</span>
+				</p>
+
+				<p>
+					<label>Email:</label>
+					<input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required />
+					<span *ngIf="!email.valid && email.touched" class="text-danger">
+						Ingresa email
+					</span>
+				</p>
+
+				<p>
+					<label for="">Sexo:</label>
+					<select name="sex" #name="ngModel" [(ngModel)]="user.sex" class="form-control">
+						<option value="Masculino">Masculino</option>
+						<option value="Femenino">Femenino</option>
+						<option value="Otro">Otro</option>
+					</select>
+					
+				</p>
+
+				<p>
+					<label for="">Generos de música favoritos:</label>
+					<input type="text" name="music" #name="ngModel" [(ngModel)]="user.music" class="form-control"  />
+				</p>
+
+				<p>
+					<label for="">Generos de películas favoritos:</label>
+					<input type="text" name="movies" #name="ngModel" [(ngModel)]="user.movies" class="form-control"  />
+				</p>
+
+				<p>
+					<label for="">Fecha de nacimiento:</label>
+					<input type="date" name="birth" #name="ngModel" [(ngModel)]="user.birth" class="form-control"  />
+				</p>
+				
+
+				<!-- <p>
+					<label>Estado actual:</label>
+					<textarea name="status" #text="ngModel" [(ngModel)]="user.status" class="form-control" ></textarea>
+				</p> -->
+			</div>
+
+			<div class="form-right col-lg-6">
+				<div class="form-right" *ngIf="user.image">
+					<img src="{{ url + 'get-image-user/' + user.image }}" />
+				</div>
+				<br>
+				<div class="form-right">
+					<input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)"/>
+				</div>
+			</div>
+		</div>
+		
+		<br>
+		<div class="center">
+			<input type="submit" value="Actualizar" class="btn btn-primary" [disabled]="!userEditForm.form.valid" />
+		</div>
+
+	</form>
+
+</div>
